@@ -48,7 +48,6 @@ public class SetTextUtil {
     public static void setText(TextView textView, String str,int defColor){
         textView.setTextColor(defColor);
         textView.setText(str);
-
     }
 
 }

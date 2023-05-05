@@ -54,9 +54,9 @@ public class NewBeeRecogTextManager {
         return nowTextBean;
     }
 
-    public NewBeeRecogTextBean setTransStr(String str,int index){
+    public NewBeeRecogTextBean setTransStr(String str){
         try {
-            NewBeeRecogTextBean  newBeeRecogTextBean =list.get(index);
+            NewBeeRecogTextBean  newBeeRecogTextBean =list.get(list.size()-1);
             if(TextUtils.isEmpty(newBeeRecogTextBean.getRecogFinshedStr())){
                 newBeeRecogTextBean.setTransStr(str);
             }else {
@@ -66,6 +66,16 @@ public class NewBeeRecogTextManager {
         }catch (Exception e){
             return null;
         }
+    }
+
+    public NewBeeRecogTextBean getNowTextBean(){
+        try {
+            NewBeeRecogTextBean  newBeeRecogTextBean =list.get(list.size()-1);
+            return newBeeRecogTextBean;
+        }catch (Exception e){
+            return null;
+        }
+
 
     }
 

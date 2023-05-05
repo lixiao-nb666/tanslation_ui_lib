@@ -34,6 +34,13 @@ public class VoiceToTextEventSubscriptionSubject implements VoiceToTextEventSubj
     }
 
     @Override
+    public void getStatu(String str) {
+        for (VoiceToTextEventObserver observer : observers) {
+            observer.getStatu(str);
+        }
+    }
+
+    @Override
     public void isConnect() {
         for (VoiceToTextEventObserver observer : observers) {
             observer.isConnect();
@@ -62,18 +69,34 @@ public class VoiceToTextEventSubscriptionSubject implements VoiceToTextEventSubj
     }
 
     @Override
-    public void getStatusFinishedStr(String str) {
+    public void getRecogFinishedStr(String str) {
         for (VoiceToTextEventObserver observer : observers) {
-            observer.getStatusFinishedStr(str);
+            observer.getRecogFinishedStr(str);
         }
     }
 
     @Override
-    public void getRecogingTranslationStr(String str) {
+    public void getTranslationStr(String str) {
         for (VoiceToTextEventObserver observer : observers) {
-            observer.getRecogingTranslationStr(str);
+            observer.getTranslationStr(str);
         }
     }
+
+    @Override
+    public void getRecogingAndTranslationStr(String recogStr, String tanslationStr) {
+        for (VoiceToTextEventObserver observer : observers) {
+            observer.getRecogingAndTranslationStr(recogStr,tanslationStr);
+        }
+    }
+
+    @Override
+    public void getRecogFinshAndTranslationStr(String recogStr, String tanslationStr) {
+        for (VoiceToTextEventObserver observer : observers) {
+            observer.getRecogFinshAndTranslationStr(recogStr,tanslationStr);
+        }
+    }
+
+
 
     @Override
     public void onError(int code, String result) {

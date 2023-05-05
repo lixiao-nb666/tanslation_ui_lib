@@ -41,8 +41,15 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
 
     private VoiceToTextEventObserver voiceToTextEventObserver = new VoiceToTextEventObserver() {
         @Override
-        public void isConnect() {
+        public void getStatu(String str) {
+            Message msg = new Message();
+            msg.what = UpdateUiType.updateStatuStr.ordinal();
+            msg.obj = str;
+            uiHandler.sendMessage(msg);
+        }
 
+        @Override
+        public void isConnect() {
             String str="net isConnect!";
             Message msg = new Message();
             msg.what = UpdateUiType.updateStatuStr.ordinal();
@@ -52,7 +59,6 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
 
         @Override
         public void isColse(String errStr) {
-
             String str=errStr;
             Message msg = new Message();
             msg.what = UpdateUiType.updateErrStr.ordinal();
@@ -62,7 +68,6 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
 
         @Override
         public void startOk() {
-
             String str="Start Ok,Please speak!";
             Message msg = new Message();
             msg.what = UpdateUiType.updateStatuStr.ordinal();
@@ -72,53 +77,46 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
 
         @Override
         public void getRecogingStr(String str) {
-
             if(TextUtils.isEmpty(str)){
                 return;
             }
-            Message msg = new Message();
-            msg.what = UpdateUiType.updateRecogingStr.ordinal();
-            msg.obj = str;
-            uiHandler.sendMessage(msg);
-//
-//          NewBeeRecogTextBean  textBean = NewBeeRecogTextManager.getInstance().setInitRecogingStr(str);
-//            if (null == textBean) {
-//                return;
-//            }
-//            SetTextUtil.setText(initTV,textBean,true);
-//            TextTransUtil.getInstance().getTextTrans(str, textBean.getIndex());
+            NewBeeRecogTextManager.getInstance().setInitRecogingStr(str);
         }
 
         @Override
-        public void getStatusFinishedStr(String str) {
-
+        public void getRecogFinishedStr(String str) {
             if(TextUtils.isEmpty(str)){
                 return;
             }
-            Message msg = new Message();
-            msg.what = UpdateUiType.updateRecogFinshStr.ordinal();
-            msg.obj = str;
-            uiHandler.sendMessage(msg);
-
-//            NewBeeRecogTextBean  textBean = NewBeeRecogTextManager.getInstance().setInitRecogingStr(str);
-//            if (null == textBean) {
-//                return;
-//            }
-//            SetTextUtil.setText(initTV,textBean,true);
-//            TextTransUtil.getInstance().getTextTrans(str, textBean.getIndex());
+            NewBeeRecogTextManager.getInstance().setInitFinshedStr(str);
         }
 
         @Override
-        public void getRecogingTranslationStr(String str) {
+        public void getTranslationStr(String str) {
             if(TextUtils.isEmpty(str)){
                 return;
             }
-            Message msg=new Message();
-            msg.what= UpdateUiType.updateTextTransStr.ordinal();
-            msg.arg1=index;
-            msg.obj=str;
-            uiHandler.sendMessage(msg);
+            NewBeeRecogTextManager.getInstance().setTransStr(str);
+            uiHandler.sendEmptyMessage(UpdateUiType.updateTextTransStr.ordinal());
         }
+
+        @Override
+        public void getRecogingAndTranslationStr(String recogStr, String tanslationStr) {
+
+            NewBeeRecogTextManager.getInstance().setInitRecogingStr(recogStr);
+            NewBeeRecogTextManager.getInstance().setTransStr(tanslationStr);
+            uiHandler.sendEmptyMessage(UpdateUiType.updateTextTransStr.ordinal());
+
+
+        }
+
+        @Override
+        public void getRecogFinshAndTranslationStr(String recogStr, String tanslationStr) {
+            NewBeeRecogTextManager.getInstance().setInitFinshedStr(recogStr);
+            NewBeeRecogTextManager.getInstance().setTransStr(tanslationStr);
+            uiHandler.sendEmptyMessage(UpdateUiType.updateTextTransStr.ordinal());
+        }
+
 
         @Override
         public void onError(int code, String result) {
@@ -141,31 +139,19 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
             switch (uiType) {
                 case updateStatuStr:
                     str = (String) msg.obj;
-                    SetTextUtil.setText(transTV,str, R.color.text_translation_over_color);
+                    SetTextUtil.setText(transTV,str,useRsgetColor(R.color.text_translation_over_color) );
                     break;
                 case updateErrStr:
                     str = (String) msg.obj;
-                    SetTextUtil.setText(transTV,str,context.getApplicationContext().getResources().getColor(com.newbee.bulid_lib.R.color.red));
+                    SetTextUtil.setText(transTV,str,useRsgetColor(com.newbee.bulid_lib.R.color.red));
                     break;
-                case updateRecogingStr:
-                    str = (String) msg.obj;
-                    textBean = NewBeeRecogTextManager.getInstance().setInitRecogingStr(str);
-                    if (null == textBean) {
-                        return;
-                    }
-                    break;
-                case updateRecogFinshStr:
-                    str = (String) msg.obj;
-                    textBean = NewBeeRecogTextManager.getInstance().setInitFinshedStr(str);
-                    if (null == textBean) {
-                        return;
-                    }
-                    break;
+
                 case updateTextTransStr:
-                    str = (String) msg.obj;
-                    int index=msg.arg1;
-                    textBean = NewBeeRecogTextManager.getInstance().setTransStr(str, index);
-                    SetTextUtil.setText(transTV,textBean,false , context.getApplicationContext().getResources().getColor(com.newbee.bulid_lib.R.color.white),context.getApplicationContext().getResources().getColor(R.color.text_translation_over_color));
+                    textBean = NewBeeRecogTextManager.getInstance().getNowTextBean();
+                    if(null==textBean){
+                        return;
+                    }
+                    SetTextUtil.setText(transTV,textBean,false ,useRsgetColor(com.newbee.bulid_lib.R.color.white),useRsgetColor(R.color.text_translation_over_color));
                     adapter.setText(textBean);
                     break;
 
@@ -363,5 +349,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     }
 
 
-
+    private int useRsgetColor(int rsColor){
+        return context.getApplicationContext().getResources().getColor(rsColor);
+    }
 }
