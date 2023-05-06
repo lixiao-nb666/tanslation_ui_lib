@@ -141,7 +141,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                 case updateStatuStr:
                     isTs=true;
                     str = (String) msg.obj;
-                    SetTextUtil.setText(transTV,str,useRsgetColor(R.color.text_translation_over_color) );
+                    SetTextUtil.setText(tsStatuTV,str );
                     break;
                 case updateOkStr:
                     str = (String) msg.obj;
