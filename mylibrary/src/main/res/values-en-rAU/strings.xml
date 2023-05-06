@@ -1,30 +1,13 @@
+
 <resources>
     <string name="app_name">nrmyw translation</string>
     //语言配置列表
-    <string name="language_cn">Chinese</string>
-    <string name="language_en">English</string>
-    <string name="language_es">Spanish</string>
-    <string name="language_fr">French</string>
-    <string name="language_ja">Japanese</string>
-    <string name="language_ko">Korean</string>
-    <string name="language_ru">Russian</string>
-    <string name="language_vi">Vietnamese</string>
-    <string name="accessibility_des">Need to enable service</string>
+
+    <string name="statu_net_ok">net is ok!</string>
+
+    <string name="statu_start_ok">Start Ok, now you can speak!</string>
 
 
 
-    //语言识别垂直领域
-    <string name="pd_no">General purpose</string>
-    <string name="pd_court">court</string>
-    <string name="pd_edu">education</string>
-    <string name="pd_finance">finance</string>
-    <string name="pd_medical">Medical treatment</string>
-    <string name="pd_tech">Science and technology</string>
-    <string name="pd_isp">operator</string>
-    <string name="pd_gov">government</string>
-    <string name="pd_ecom">e-commerce</string>
-    <string name="pd_mil">military</string>
-    <string name="pd_com">enterprise</string>
-    <string name="pd_life">life</string>
-    <string name="pd_car">car</string>
+
 </resources>

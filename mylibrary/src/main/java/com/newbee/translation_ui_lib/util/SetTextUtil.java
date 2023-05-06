@@ -50,4 +50,7 @@ public class SetTextUtil {
         textView.setText(str);
     }
 
+    public static void setText(TextView textView, String str){
+        textView.setText(str);
+    }
 }

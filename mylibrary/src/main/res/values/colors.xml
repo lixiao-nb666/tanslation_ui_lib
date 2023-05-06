@@ -7,6 +7,8 @@
     <color name="text_color">#E4FF00</color>
     <color name="text_title_color">#00ffd2</color>
     <color name="text_translation_over_color">#FF5DFF00</color>
+    <color name="text_ts_statu_color">#F0FFB1</color>
+
 
 
 </resources>

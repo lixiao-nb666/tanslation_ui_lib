@@ -34,7 +34,8 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     public abstract String getToLangStr();
 
 
-    private TextView transTV;
+    private TextView transTV,tsStatuTV;
+    private boolean isTs;
     private Button toBT,fromBT;
     private RecyclerView historyRV;
     private NewBeeTextHistoryAdapter adapter;
@@ -50,9 +51,9 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
 
         @Override
         public void isConnect() {
-            String str="net isConnect!";
+            String str=useRsgetString(R.string.statu_net_ok);
             Message msg = new Message();
-            msg.what = UpdateUiType.updateStatuStr.ordinal();
+            msg.what = UpdateUiType.updateOkStr.ordinal();
             msg.obj = str;
             uiHandler.sendMessage(msg);
         }
@@ -68,9 +69,9 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
 
         @Override
         public void startOk() {
-            String str="Start Ok,Please speak!";
+            String str=useRsgetString(R.string.statu_start_ok);
             Message msg = new Message();
-            msg.what = UpdateUiType.updateStatuStr.ordinal();
+            msg.what = UpdateUiType.updateOkStr.ordinal();
             msg.obj = str;
             uiHandler.sendMessage(msg);
         }
@@ -137,15 +138,27 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
             NewBeeRecogTextBean textBean;
             UpdateUiType uiType= UpdateUiType.values()[msg.what];
             switch (uiType) {
+                case updateOkStr:
+                    isTs=true;
+                    str = (String) msg.obj;
+                    SetTextUtil.setText(tsStatuTV,"("+str+")" );
+                    break;
                 case updateStatuStr:
                     str = (String) msg.obj;
                     SetTextUtil.setText(transTV,str,useRsgetColor(R.color.text_translation_over_color) );
+                    if(isTs){
+                        isTs=false;
+                        SetTextUtil.setText(tsStatuTV,"" );
+                    }
                     break;
                 case updateErrStr:
                     str = (String) msg.obj;
                     SetTextUtil.setText(transTV,str,useRsgetColor(com.newbee.bulid_lib.R.color.red));
+                    if(isTs){
+                        isTs=false;
+                        SetTextUtil.setText(tsStatuTV,"" );
+                    }
                     break;
-
                 case updateTextTransStr:
                     textBean = NewBeeRecogTextManager.getInstance().getNowTextBean();
                     if(null==textBean){
@@ -153,6 +166,10 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                     }
                     SetTextUtil.setText(transTV,textBean,false ,useRsgetColor(com.newbee.bulid_lib.R.color.white),useRsgetColor(R.color.text_translation_over_color));
                     adapter.setText(textBean);
+                    if(isTs){
+                        isTs=false;
+                        SetTextUtil.setText(tsStatuTV,"" );
+                    }
                     break;
 
             }
@@ -249,7 +266,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
 
     @Override
     public int getViewLayoutRsId() {
-        return R.layout.activity_newbee_simple_one_dialog_recog_2;
+        return R.layout.activity_newbee_simple_one_dialog_recog;
     }
 
 
@@ -272,6 +289,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     @Override
     public void initView() {
         transTV=findViewById(R.id.tv_tran);
+        tsStatuTV=findViewById(R.id.tv_ts_statu);
         toBT=findViewById(R.id.bt_to);
 
         toBT.setOnFocusChangeListener(onFocusChangeListener);
@@ -324,6 +342,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
         VoiceToTextEventSubscriptionSubject.getInstence().detach(voiceToTextEventObserver);
         getVoiceToTextProcess().close();
         keyEventUtil.close();
+        uiHandler.removeCallbacksAndMessages(null);
     }
 
     @Override
@@ -351,5 +370,9 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
 
     private int useRsgetColor(int rsColor){
         return context.getApplicationContext().getResources().getColor(rsColor);
+    }
+
+    private String useRsgetString(int rsStr){
+        return context.getApplicationContext().getResources().getString(rsStr);
     }
 }
