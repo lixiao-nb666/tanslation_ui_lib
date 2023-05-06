@@ -1,0 +1,13 @@
+
+<resources>
+    <string name="app_name">nrmyw translation</string>
+    //语言配置列表
+
+    <string name="statu_net_ok">Connexion internet réussie !</string>
+
+    <string name="statu_start_ok">Commencez bien, maintenant vous pouvez parler !</string>
+
+
+
+
+</resources>
