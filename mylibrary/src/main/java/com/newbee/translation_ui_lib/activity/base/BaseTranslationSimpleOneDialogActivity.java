@@ -138,12 +138,12 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
             NewBeeRecogTextBean textBean;
             UpdateUiType uiType= UpdateUiType.values()[msg.what];
             switch (uiType) {
-                case updateOkStr:
+                case updateStatuStr:
                     isTs=true;
                     str = (String) msg.obj;
-                    SetTextUtil.setText(tsStatuTV,"("+str+")" );
+                    SetTextUtil.setText(transTV,str,useRsgetColor(R.color.text_translation_over_color) );
                     break;
-                case updateStatuStr:
+                case updateOkStr:
                     str = (String) msg.obj;
                     SetTextUtil.setText(transTV,str,useRsgetColor(R.color.text_translation_over_color) );
                     if(isTs){
