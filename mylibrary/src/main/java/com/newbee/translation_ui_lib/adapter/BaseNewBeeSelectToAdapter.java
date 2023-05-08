@@ -26,11 +26,13 @@ public abstract class BaseNewBeeSelectToAdapter extends RecyclerView.Adapter {
     private List<Object> list;
     private String nowStr;
     private ItemClick itemClick;
-    public BaseNewBeeSelectToAdapter(Context context,  List<Object> list, String nowStr) {
+    public BaseNewBeeSelectToAdapter(Context context, String nowStr) {
         layoutInflater=LayoutInflater.from(context);
-        this.list=list;
         this.nowStr=nowStr;
+    }
 
+    public void setList(  List<Object> list){
+        this.list=list;
     }
 
     public void setClick(ItemClick itemClick){
@@ -38,7 +40,12 @@ public abstract class BaseNewBeeSelectToAdapter extends RecyclerView.Adapter {
     }
 
 
-
+    public Object getData(int index){
+        try {
+            return list.get(index);
+        }catch (Exception e){}
+        return null;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -68,7 +75,7 @@ public abstract class BaseNewBeeSelectToAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 if(null!=itemClick){
-                    itemClick.nowSelect(position);
+                    itemClick.nowSelect(position,object);
                 }
             }
         };
@@ -132,7 +139,7 @@ public abstract class BaseNewBeeSelectToAdapter extends RecyclerView.Adapter {
     }
 
     public interface ItemClick {
-        public void nowSelect(int index);
+        public void nowSelect(int index,Object obj);
 
         public void nowNeedToPager(int index);
     }

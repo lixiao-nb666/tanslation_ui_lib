@@ -6,4 +6,5 @@ public enum KeyCodesEventType {
     RIGHT, //往右
     TOP,//上
     DOWN,//下
+    QUE,//确定
 }

@@ -36,6 +36,20 @@ public class ActivityKeyDownListUtil {
         return needKeyCodes;
     }
 
+    //中间键
+    public static List<Integer> queOk1() {
+        List<Integer> needKeyCodes = new ArrayList<>();
+        needKeyCodes.add(KeyEvent.KEYCODE_DPAD_CENTER);
+        return needKeyCodes;
+    }
+
+    //确定按钮
+    public static List<Integer> queOk2() {
+        List<Integer> needKeyCodes = new ArrayList<>();
+        needKeyCodes.add(KeyEvent.KEYCODE_ENTER);
+        return needKeyCodes;
+    }
+
 
 
 

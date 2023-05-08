@@ -23,7 +23,7 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
 
     public abstract List<Object> getList();
 
-    public abstract void nowSelectNeedTodo(int index);
+    public abstract void nowSelectNeedTodo(int index,Object object);
 
     public abstract String nowStr();
 
@@ -32,8 +32,8 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
 
     private BaseNewBeeSelectToAdapter.ItemClick itemClick = new BaseNewBeeSelectToAdapter.ItemClick() {
         @Override
-        public void nowSelect(int index) {
-            nowSelectNeedTodo(index);
+        public void nowSelect(int index,Object obj) {
+            nowSelectNeedTodo(index,obj);
         }
 
         @Override
@@ -64,6 +64,7 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
     @Override
     public void initData() {
         initAdapter = getAdapter();
+        initAdapter.setList(getList());
     }
 
     @Override
@@ -77,6 +78,8 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.DOWN.ordinal(), ActivityKeyDownListUtil.toDownList());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.LEFT.ordinal(), ActivityKeyDownListUtil.toLeftList());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.RIGHT.ordinal(), ActivityKeyDownListUtil.toRightList());
+        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk1());
+        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk2());
 
     }
 
@@ -133,7 +136,12 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
                         initRV.scrollToPosition(toRightIndex);
                     }
                     break;
-
+                case QUE:
+                    int queIndex=getNowShowIndex();
+                    if(initAdapter.getItemCount()!=0&&queIndex<initAdapter.getItemCount()){
+                        nowSelectNeedTodo(queIndex,initAdapter.getData(queIndex));
+                    }
+                    break;
 
             }
         }
