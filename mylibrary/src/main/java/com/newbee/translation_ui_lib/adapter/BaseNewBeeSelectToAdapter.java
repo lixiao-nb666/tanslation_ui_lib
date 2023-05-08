@@ -69,7 +69,13 @@ public abstract class BaseNewBeeSelectToAdapter extends RecyclerView.Adapter {
         if(TextUtils.isEmpty(showInfoBean.content)){
             viewHodler.contentTV.setText("");
         }else {
-            viewHodler.contentTV.setText(viewHodler.contentTV.getContext().getApplicationContext().getResources().getText(R.string.item_content_head)+showInfoBean.content);
+            if(showInfoBean.hideContentTitle){
+                viewHodler.contentTV.setText(showInfoBean.content);
+            }else {
+                viewHodler.contentTV.setText(viewHodler.contentTV.getContext().getApplicationContext().getResources().getText(R.string.item_content_head)+showInfoBean.content);
+            }
+
+
         }
         View.OnClickListener onClickListener=new View.OnClickListener() {
             @Override
@@ -147,6 +153,7 @@ public abstract class BaseNewBeeSelectToAdapter extends RecyclerView.Adapter {
     public class ShowInfoBean{
         String title;
         String content;
+        boolean hideContentTitle;
 
         public ShowInfoBean() {
         }
@@ -167,11 +174,20 @@ public abstract class BaseNewBeeSelectToAdapter extends RecyclerView.Adapter {
             this.content = content;
         }
 
+        public boolean isHideContentTitle() {
+            return hideContentTitle;
+        }
+
+        public void setHideContentTitle(boolean hideContentTitle) {
+            this.hideContentTitle = hideContentTitle;
+        }
+
         @Override
         public String toString() {
             return "ShowInfoBean{" +
                     "title='" + title + '\'' +
                     ", content='" + content + '\'' +
+                    ", hideContentTitle=" + hideContentTitle +
                     '}';
         }
     }
