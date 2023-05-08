@@ -36,11 +36,16 @@ public class aaaaaa extends BaseTranslationSimpleOneDialogActivity {
         VoiceToTextEventSubscriptionSubject.getInstence().getRecogingStr("123");
         VoiceToTextEventSubscriptionSubject.getInstence().getTranslationStr("fjklsdjflsalfjklsad");
 
-        basehandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                VoiceToTextEventSubscriptionSubject.getInstence().getRecogFinshAndTranslationStr("1244","xiao ge da shuai bi  !");
-            }
-        },2000);
+        basehandler.postDelayed(runnable,2000);
     }
+
+    private int index;
+    private Runnable runnable=new Runnable() {
+        @Override
+        public void run() {
+            index++;
+            VoiceToTextEventSubscriptionSubject.getInstence().getRecogFinshAndTranslationStr("1244","xiao ge da shuai bi  !"+index);
+            basehandler.postDelayed(runnable,2000);
+        }
+    };
 }

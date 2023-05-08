@@ -5,7 +5,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
+        android:label="abcd"
 
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.youdao.zhiyun.ydasrdemo.ASRDemoActivity"/>
+
     </application>
 
 </manifest>

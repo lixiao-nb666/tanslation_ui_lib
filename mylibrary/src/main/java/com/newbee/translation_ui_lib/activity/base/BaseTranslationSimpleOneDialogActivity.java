@@ -20,6 +20,7 @@ import com.newbee.translation_ui_lib.adapter.NewBeeTextHistoryAdapter;
 import com.newbee.translation_ui_lib.bean.NewBeeRecogTextBean;
 import com.newbee.translation_ui_lib.event.VoiceToTextEventObserver;
 import com.newbee.translation_ui_lib.event.VoiceToTextEventSubscriptionSubject;
+import com.newbee.translation_ui_lib.key.event.ActivityKeyDownListUtil;
 import com.newbee.translation_ui_lib.key.event.KeyCodesEventType;
 import com.newbee.translation_ui_lib.manager.NewBeeRecogTextManager;
 import com.newbee.translation_ui_lib.process.BaseVoiceToTextProcess;
@@ -194,27 +195,16 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                     toBT.setFocusable(true);
                     break;
                 case TOP:
-                    if(adapter.getItemCount()<=0){
-                        return;
+                   int toTopIndex=getNowShowIndex()+1;
+                    if(adapter.getItemCount()!=0&&toTopIndex<adapter.getItemCount()){
+                        historyRV.smoothScrollToPosition(toTopIndex);
                     }
-
-                    getNowIndex();
-                    index++;
-                    if (index >= adapter.getItemCount()) {
-                        index = adapter.getItemCount() - 1;
-                    }
-                    historyRV.smoothScrollToPosition(index);
                     break;
                 case DOWN:
-                    if(adapter.getItemCount()<=0){
-                        return;
+                    int toDownIndex=getNowShowIndex()-1;
+                    if(toDownIndex>=0&&adapter.getItemCount()!=0){
+                        historyRV.smoothScrollToPosition(toDownIndex);
                     }
-                    getNowIndex();
-                    index--;
-                    if (index < 0) {
-                        index = 0;
-                    }
-                    historyRV.smoothScrollToPosition(index);
                     break;
 
             }
@@ -222,20 +212,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     };
 
 
-    private int index;
-    private void getNowIndex() {
-        if (historyRV != null && historyRV.getChildCount() > 0) {
-            try {
-                index = ((RecyclerView.LayoutParams) historyRV.getChildAt(0).getLayoutParams()).getViewAdapterPosition();
-                index= initLM.findLastCompletelyVisibleItemPosition();
-                return ;
-            } catch (Exception e) {
 
-            }
-        }
-        return;
-
-    }
 
 
 
@@ -374,5 +351,16 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
 
     private String useRsgetString(int rsStr){
         return context.getApplicationContext().getResources().getString(rsStr);
+    }
+
+    public int getNowShowIndex() {
+
+        int index = -1;
+        int childCount =historyRV.getChildCount();
+        if (childCount > 0) {
+            View lastChild = historyRV.getChildAt(childCount - 1);
+            index = historyRV.getChildAdapterPosition(lastChild);
+        }
+        return index;
     }
 }
