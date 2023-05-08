@@ -74,8 +74,6 @@ public abstract class BaseNewBeeSelectToAdapter extends RecyclerView.Adapter {
             }else {
                 viewHodler.contentTV.setText(viewHodler.contentTV.getContext().getApplicationContext().getResources().getText(R.string.item_content_head)+showInfoBean.content);
             }
-
-
         }
         View.OnClickListener onClickListener=new View.OnClickListener() {
             @Override

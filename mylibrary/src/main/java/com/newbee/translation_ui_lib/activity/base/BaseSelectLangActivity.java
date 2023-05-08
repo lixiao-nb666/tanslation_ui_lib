@@ -1,9 +1,12 @@
 package com.newbee.translation_ui_lib.activity.base;
 
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -82,21 +85,27 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.DOWN.ordinal(), ActivityKeyDownListUtil.toDownList());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.LEFT.ordinal(), ActivityKeyDownListUtil.toLeftList());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.RIGHT.ordinal(), ActivityKeyDownListUtil.toRightList());
-        basehandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk1());
-                keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk2());
-            }
-        },300);
-
-        String shareIndexStr=MyShare.getInstance().getString(this.getClass().getSimpleName()+nowStr());
-        if(!TextUtils.isEmpty(shareIndexStr)){
-            int toIndex=Integer.valueOf(shareIndexStr);
-            initRV.scrollToPosition(toIndex);
-        }
-
+        uiHandler.sendEmptyMessageDelayed(0,300);
     }
+
+    private Handler uiHandler=new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk1());
+            keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk2());
+
+
+            String shareIndexStr=MyShare.getInstance().getString(this.getClass().getSimpleName()+nowStr());
+            if(!TextUtils.isEmpty(shareIndexStr)){
+                int toIndex=Integer.valueOf(shareIndexStr);
+                if(null!=initAdapter&&toIndex<initAdapter.getItemCount()){
+                    initRV.scrollToPosition(toIndex);
+                }
+
+            }
+        }
+    };
 
     @Override
     public void closeActivity() {
