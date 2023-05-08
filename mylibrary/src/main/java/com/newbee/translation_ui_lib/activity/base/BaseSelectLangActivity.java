@@ -57,7 +57,6 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
         initRV = findViewById(R.id.rv_init);
         LinearLayoutManager initLM = new LinearLayoutManager(this);
         initLM.setOrientation(LinearLayoutManager.HORIZONTAL);
-
         initRV.setLayoutManager(initLM);
     }
 
@@ -69,12 +68,10 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
 
     @Override
     public void initControl() {
-
         initAdapter.setClick(itemClick);
         initRV.setAdapter(initAdapter);
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(initRV);
-
         keyEventUtil.setListen(keyEventListen);
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.TOP.ordinal(), ActivityKeyDownListUtil.toTopList());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.DOWN.ordinal(), ActivityKeyDownListUtil.toDownList());
@@ -85,17 +82,17 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
 
     @Override
     public void closeActivity() {
-
+        keyEventUtil.close();
     }
 
     @Override
     public void viewIsShow() {
-
+        keyEventUtil.start();
     }
 
     @Override
     public void viewIsPause() {
-
+        keyEventUtil.pause();
     }
 
     @Override
@@ -105,7 +102,6 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
 
 
     public int getNowShowIndex() {
-
         int index = -1;
         int childCount = initRV.getChildCount();
         if (childCount > 0) {
@@ -119,10 +115,7 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
     private SystemKeyEventListen keyEventListen=new SystemKeyEventListen() {
         @Override
         public void nowCanDoEvent(int eventTypeInt) {
-
-
             KeyCodesEventType eventType = KeyCodesEventType.values()[eventTypeInt];
-
             switch (eventType) {
                 case NONE:
                     break;
