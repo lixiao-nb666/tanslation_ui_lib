@@ -1,5 +1,6 @@
 package com.newbee.translation_ui_lib.activity.base;
 
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.newbee.bulid_lib.mybase.activity.BaseCompatActivity;
+import com.newbee.bulid_lib.mybase.share.MyShare;
 import com.newbee.system_key_lib.systemkey.SystemKeyEvent;
 import com.newbee.system_key_lib.systemkey.SystemKeyEventListen;
 import com.newbee.translation_ui_lib.R;
@@ -33,7 +35,9 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
     private BaseNewBeeSelectToAdapter.ItemClick itemClick = new BaseNewBeeSelectToAdapter.ItemClick() {
         @Override
         public void nowSelect(int index,Object obj) {
-            nowSelectNeedTodo(index,obj);
+            doSelectIndex(index,obj);
+
+
         }
 
         @Override
@@ -78,8 +82,19 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.DOWN.ordinal(), ActivityKeyDownListUtil.toDownList());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.LEFT.ordinal(), ActivityKeyDownListUtil.toLeftList());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.RIGHT.ordinal(), ActivityKeyDownListUtil.toRightList());
-        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk1());
-        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk2());
+        basehandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk1());
+                keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk2());
+            }
+        },300);
+
+        String shareIndexStr=MyShare.getInstance().getString(this.getClass().getSimpleName()+nowStr());
+        if(!TextUtils.isEmpty(shareIndexStr)){
+            int toIndex=Integer.valueOf(shareIndexStr);
+            initRV.scrollToPosition(toIndex);
+        }
 
     }
 
@@ -139,7 +154,8 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
                 case QUE:
                     int queIndex=getNowShowIndex();
                     if(initAdapter.getItemCount()!=0&&queIndex<initAdapter.getItemCount()){
-                        nowSelectNeedTodo(queIndex,initAdapter.getData(queIndex));
+                        doSelectIndex(queIndex,initAdapter.getData(queIndex));
+
                     }
                     break;
 
@@ -167,4 +183,11 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
         }
         return super.dispatchKeyEvent(event);
     }
+
+    public void doSelectIndex(int index,Object obj){
+        nowSelectNeedTodo(index,obj);
+        MyShare.getInstance().putString(this.getClass().getSimpleName()+nowStr(),index+"");
+    }
+
+
 }
