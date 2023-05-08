@@ -39,8 +39,6 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
         @Override
         public void nowSelect(int index,Object obj) {
             doSelectIndex(index,obj);
-
-
         }
 
         @Override
@@ -94,9 +92,7 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
             super.handleMessage(msg);
             keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk1());
             keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk2());
-
-
-            String shareIndexStr=MyShare.getInstance().getString(this.getClass().getSimpleName()+nowStr());
+            String shareIndexStr=MyShare.getInstance().getString(getShareStr());
             if(!TextUtils.isEmpty(shareIndexStr)){
                 int toIndex=Integer.valueOf(shareIndexStr);
                 if(null!=initAdapter&&toIndex<initAdapter.getItemCount()){
@@ -195,8 +191,11 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
 
     public void doSelectIndex(int index,Object obj){
         nowSelectNeedTodo(index,obj);
-        MyShare.getInstance().putString(this.getClass().getSimpleName()+nowStr(),index+"");
+        MyShare.getInstance().putString(getShareStr(),index+"");
     }
 
 
+    private String getShareStr(){
+        return this.getClass().getSimpleName()+nowStr();
+    }
 }

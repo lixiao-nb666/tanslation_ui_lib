@@ -259,8 +259,6 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                     nowBt.setTextColor(context.getResources().getColor(R.color.text_translation_over_color));
                 }
             }
-
-
         }
     };
     @Override
