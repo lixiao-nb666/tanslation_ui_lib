@@ -24,6 +24,10 @@ public class NewBeeRecogTextManager {
         return newBeeRecogTextManager;
     }
 
+    public void clear(){
+        list.clear();
+    }
+
     public NewBeeRecogTextBean setInitRecogingStr(String str){
 
         if(list.size()==0){

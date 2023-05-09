@@ -108,8 +108,6 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
             NewBeeRecogTextManager.getInstance().setInitRecogingStr(recogStr);
             NewBeeRecogTextManager.getInstance().setTransStr(tanslationStr);
             uiHandler.sendEmptyMessage(UpdateUiType.updateTextTransStr.ordinal());
-
-
         }
 
         @Override
@@ -122,7 +120,6 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
 
         @Override
         public void onError(int code, String result) {
-
             String str=code+" : "+result;
             Message msg = new Message();
             msg.what = UpdateUiType.updateErrStr.ordinal();
@@ -294,6 +291,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
         historyRV.setLayoutManager(initLM);
         adapter = new NewBeeTextHistoryAdapter(this, null, false);
         historyRV.setAdapter(adapter);
+        NewBeeRecogTextManager.getInstance().clear();
     }
 
 
@@ -327,6 +325,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
         fromBT .setText(getFromLangStr());
         toBT.setText(getToLangStr());
         keyEventUtil.start();
+
     }
 
     @Override
@@ -352,7 +351,6 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     }
 
     public int getNowShowIndex() {
-
         int index = -1;
         int childCount =historyRV.getChildCount();
         if (childCount > 0) {
