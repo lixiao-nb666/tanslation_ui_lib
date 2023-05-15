@@ -96,6 +96,8 @@ public abstract class BaseNewBeeSelectToAdapter extends RecyclerView.Adapter {
             viewHodler.toLeftIV.setVisibility(View.VISIBLE);
             viewHodler.toRightIV.setVisibility(View.VISIBLE);
         }
+        int nowPagerShow=position+1;
+        viewHodler.pagerTV.setText(nowPagerShow+"/"+list.size());
         viewHodler.toLeftIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +132,7 @@ public abstract class BaseNewBeeSelectToAdapter extends RecyclerView.Adapter {
     class ViewHodler extends RecyclerView.ViewHolder {
         private ImageView toLeftIV,toRightIV;
         private LinearLayout contentLL;
-        private TextView titleTV,contentTV;
+        private TextView titleTV,contentTV,pagerTV;
 
         public ViewHodler(View itemView) {
             super(itemView);
@@ -139,6 +141,7 @@ public abstract class BaseNewBeeSelectToAdapter extends RecyclerView.Adapter {
             contentLL=itemView.findViewById(R.id.ll_content);
             titleTV=itemView.findViewById(R.id.tv_title);
             contentTV=itemView.findViewById(R.id.tv_content);
+            pagerTV=itemView.findViewById(R.id.tv_pager);
         }
     }
 

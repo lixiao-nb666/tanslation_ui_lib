@@ -55,6 +55,16 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_pager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="39px"
+        android:textSize="18px"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/text_translation_over_color"/>
+
 
 
 </RelativeLayout>

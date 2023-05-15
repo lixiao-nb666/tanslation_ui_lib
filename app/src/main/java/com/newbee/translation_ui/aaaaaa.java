@@ -12,7 +12,7 @@ public class aaaaaa extends BaseTranslationSimpleOneDialogActivity {
 
     @Override
     public Class getFromLangActivity() {
-        return null;
+        return FromLangActivity.class;
     }
 
     @Override
