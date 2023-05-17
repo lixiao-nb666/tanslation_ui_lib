@@ -206,7 +206,6 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                     }
                     break;
                 case BACK:
-                    Log.i("kankan","kankan11111111111111");
                     ActivityManager.getInstance().finishAllActivity();
                     break;
             }

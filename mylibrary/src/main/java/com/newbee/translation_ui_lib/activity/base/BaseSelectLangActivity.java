@@ -35,7 +35,7 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
 
     public abstract BaseNewBeeSelectToAdapter getAdapter();
 
-    public abstract Class backToActivity();
+
 
 
     private BaseNewBeeSelectToAdapter.ItemClick itemClick = new BaseNewBeeSelectToAdapter.ItemClick() {
