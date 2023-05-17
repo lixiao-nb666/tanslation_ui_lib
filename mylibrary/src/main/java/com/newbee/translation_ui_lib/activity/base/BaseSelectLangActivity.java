@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.newbee.bulid_lib.mybase.activity.BaseCompatActivity;
+import com.newbee.bulid_lib.mybase.activity.util.ActivityManager;
 import com.newbee.bulid_lib.mybase.share.MyShare;
 import com.newbee.system_key_lib.systemkey.SystemKeyEvent;
 import com.newbee.system_key_lib.systemkey.SystemKeyEventListen;
@@ -33,6 +34,8 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
     public abstract String nowStr();
 
     public abstract BaseNewBeeSelectToAdapter getAdapter();
+
+    public abstract Class backToActivity();
 
 
     private BaseNewBeeSelectToAdapter.ItemClick itemClick = new BaseNewBeeSelectToAdapter.ItemClick() {
@@ -83,29 +86,29 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.DOWN.ordinal(), ActivityKeyDownListUtil.toDownList());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.LEFT.ordinal(), ActivityKeyDownListUtil.toLeftList());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.RIGHT.ordinal(), ActivityKeyDownListUtil.toRightList());
-        uiHandler.sendEmptyMessageDelayed(0,300);
+        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.BACK.ordinal(), ActivityKeyDownListUtil.back());
+        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk1());
+        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk2());
+//设置滑动位置
+        selectItem();
     }
 
-    private Handler uiHandler=new Handler(){
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk1());
-            keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk2());
-            String shareIndexStr=MyShare.getInstance().getString(getShareStr());
-            if(!TextUtils.isEmpty(shareIndexStr)){
-                int toIndex=Integer.valueOf(shareIndexStr);
-                if(null!=initAdapter&&toIndex<initAdapter.getItemCount()){
-                    initRV.scrollToPosition(toIndex);
-                }
-
+    private void selectItem(){
+        String shareIndexStr=MyShare.getInstance().getString(getShareStr());
+        if(!TextUtils.isEmpty(shareIndexStr)){
+            int toIndex=Integer.valueOf(shareIndexStr);
+            if(null!=initAdapter&&toIndex<initAdapter.getItemCount()){
+                initRV.scrollToPosition(toIndex);
             }
         }
-    };
+    }
+
+
 
     @Override
     public void closeActivity() {
         keyEventUtil.close();
+
     }
 
     @Override
@@ -160,8 +163,10 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
                     int queIndex=getNowShowIndex();
                     if(initAdapter.getItemCount()!=0&&queIndex<initAdapter.getItemCount()){
                         doSelectIndex(queIndex,initAdapter.getData(queIndex));
-
                     }
+                    break;
+                case BACK:
+                    finish();
                     break;
 
             }

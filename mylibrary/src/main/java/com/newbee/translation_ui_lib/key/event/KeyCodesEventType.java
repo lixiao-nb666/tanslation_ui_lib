@@ -7,4 +7,5 @@ public enum KeyCodesEventType {
     TOP,//上
     DOWN,//下
     QUE,//确定
+    BACK,//返回
 }

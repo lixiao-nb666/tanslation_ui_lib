@@ -51,6 +51,12 @@ public class ActivityKeyDownListUtil {
     }
 
 
+    //返回
+    public static List<Integer> back() {
+        List<Integer> needKeyCodes = new ArrayList<>();
+        needKeyCodes.add(KeyEvent.KEYCODE_BACK);
+        return needKeyCodes;
+    }
 
 
 

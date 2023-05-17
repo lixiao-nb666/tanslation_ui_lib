@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.newbee.bulid_lib.mybase.activity.BaseCompatActivity;
+import com.newbee.bulid_lib.mybase.activity.util.ActivityManager;
 import com.newbee.system_key_lib.systemkey.SystemKeyEvent;
 import com.newbee.system_key_lib.systemkey.SystemKeyEventListen;
 import com.newbee.translation_ui_lib.R;
@@ -203,7 +205,10 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                         historyRV.smoothScrollToPosition(toDownIndex);
                     }
                     break;
-
+                case BACK:
+                    Log.i("kankan","kankan11111111111111");
+                    ActivityManager.getInstance().finishAllActivity();
+                    break;
             }
         }
     };
@@ -299,7 +304,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     @Override
     public void initData() {
         keyEventUtil.setListen(keyEventListen);
-//        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.TOP.ordinal(), ActivityKeyDownListUtil.toTopList());
+        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.BACK.ordinal(), ActivityKeyDownListUtil.back());
 //        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.DOWN.ordinal(), ActivityKeyDownListUtil.toDownList());
 //        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.LEFT.ordinal(), ActivityKeyDownListUtil.toLeftList());
 //        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.RIGHT.ordinal(), ActivityKeyDownListUtil.toRightList());

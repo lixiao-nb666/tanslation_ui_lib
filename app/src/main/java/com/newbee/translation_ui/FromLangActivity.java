@@ -43,4 +43,9 @@ public class FromLangActivity extends BaseSelectLangActivity {
     public BaseNewBeeSelectToAdapter getAdapter() {
         return new NewBeeSelectToAdapter(context,"");
     }
+
+    @Override
+    public Class backToActivity() {
+        return aaaaaa.class;
+    }
 }
