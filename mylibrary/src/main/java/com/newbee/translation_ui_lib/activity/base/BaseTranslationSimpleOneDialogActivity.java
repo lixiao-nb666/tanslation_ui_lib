@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.newbee.bulid_lib.mybase.activity.BaseCompatActivity;
 import com.newbee.bulid_lib.mybase.activity.util.ActivityManager;
+import com.newbee.bulid_lib.util.SelectViewUtil;
 import com.newbee.system_key_lib.systemkey.SystemKeyEvent;
 import com.newbee.system_key_lib.systemkey.SystemKeyEventListen;
 import com.newbee.translation_ui_lib.R;
@@ -40,6 +41,9 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     private TextView transTV,tsStatuTV;
     private boolean isTs;
     private Button toBT,fromBT;
+    private SelectViewUtil selectViewUtil;
+
+
     private RecyclerView historyRV;
     private NewBeeTextHistoryAdapter adapter;
 
@@ -166,6 +170,9 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                     }
                     SetTextUtil.setText(transTV,textBean,false ,useRsgetColor(com.newbee.bulid_lib.R.color.white),useRsgetColor(R.color.text_translation_over_color));
                     adapter.setText(textBean);
+                    adapter.notifyDataSetChanged();
+
+
                     if(isTs){
                         isTs=false;
                         SetTextUtil.setText(tsStatuTV,"" );
@@ -177,7 +184,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
         }
     };
 
-
+    private boolean nowIsSeeHistory;
     private SystemKeyEvent keyEventUtil = new SystemKeyEvent();
     private SystemKeyEventListen keyEventListen=new SystemKeyEventListen() {
         @Override
@@ -187,36 +194,67 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                 case NONE:
                     break;
                 case LEFT:
-                    fromBT.setFocusable(true);
+                    selectViewUtil.toLast();
                     break;
                 case RIGHT:
-                    toBT.setFocusable(true);
+                    selectViewUtil.toNext();
                     break;
                 case TOP:
-                   int toTopIndex=getNowShowIndex()+1;
-                    if(adapter.getItemCount()!=0&&toTopIndex<adapter.getItemCount()){
-                        historyRV.smoothScrollToPosition(toTopIndex);
+                    if(null==adapter||adapter.getItemCount()==0){
+                        return;
                     }
+
+                    nowIsSeeHistory=true;
+                    if(historyIndex<historyRV.getChildCount()){
+                        historyIndex=historyRV.getChildCount()+3;
+                    }else {
+                        historyIndex=historyIndex+3;
+                    }
+                    if(historyIndex>adapter.getItemCount()){
+                        historyIndex=adapter.getItemCount()-1;
+                    }
+                    historyRV.smoothScrollToPosition(historyIndex);
                     break;
                 case DOWN:
-                    int toDownIndex=getNowShowIndex()-1;
-                    if(toDownIndex>=0&&adapter.getItemCount()!=0){
-                        historyRV.smoothScrollToPosition(toDownIndex);
+                    if(null==adapter||adapter.getItemCount()==0){
+                        return;
                     }
+
+                    nowIsSeeHistory=true;
+                    historyIndex=historyIndex-3;
+                    if(historyIndex<0){
+                        historyIndex=0;
+                    }
+                    historyRV.smoothScrollToPosition(historyIndex);
                     break;
                 case BACK:
                     ActivityManager.getInstance().finishAllActivity();
                     break;
+                case QUE:
+                    queToDo(selectViewUtil.getIndex());
+                    break;
+
             }
         }
     };
 
+    public void queToDo(int index){
+        if(index<0||index>=QueType.values().length){
+            return;
+        }
+        QueType queType=QueType.values()[index];
+        switch (queType){
+            case TO_TO_PAGER:
+                Intent toIntent=new Intent(BaseTranslationSimpleOneDialogActivity.this, getToLangActivity());
+                startActivity(toIntent);
+                break;
+            case TO_FROM_PAGER:
+                Intent fromIntent=new Intent(BaseTranslationSimpleOneDialogActivity.this, getFromLangActivity());
+                startActivity(fromIntent);
+                break;
+        }
 
-
-
-
-
-
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -247,45 +285,35 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     }
 
 
-    private View.OnFocusChangeListener onFocusChangeListener=new View.OnFocusChangeListener() {
-
-        @Override
-        public void onFocusChange(View v, boolean hasFocus) {
-            if(v instanceof Button){
-                Button nowBt= (Button) v;
-                if(hasFocus){
-                    nowBt.setTextColor(context.getResources().getColor(com.newbee.bulid_lib.R.color.black));
-                }else {
-                    nowBt.setTextColor(context.getResources().getColor(R.color.text_translation_over_color));
-                }
-            }
-        }
-    };
     @Override
     public void initView() {
         transTV=findViewById(R.id.tv_tran);
         tsStatuTV=findViewById(R.id.tv_ts_statu);
-        toBT=findViewById(R.id.bt_to);
-
-        toBT.setOnFocusChangeListener(onFocusChangeListener);
-        toBT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(BaseTranslationSimpleOneDialogActivity.this, getToLangActivity());
-                startActivity(intent);
-
-            }
-        });
         fromBT= findViewById(R.id.bt_from);
-        fromBT.setOnFocusChangeListener(onFocusChangeListener);
         fromBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(BaseTranslationSimpleOneDialogActivity.this, getFromLangActivity());
-                startActivity(intent);
+                selectViewUtil.setSelectViewByIndex(QueType.TO_FROM_PAGER.ordinal());
+                queToDo(QueType.TO_FROM_PAGER.ordinal());
             }
         });
-        fromBT.setFocusable(true);
+        toBT=findViewById(R.id.bt_to);
+        toBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectViewUtil.setSelectViewByIndex(QueType.TO_TO_PAGER.ordinal());
+                queToDo(QueType.TO_TO_PAGER.ordinal());
+            }
+        });
+
+        fromBT.setFocusable(false);
+        toBT.setFocusable(false);
+        selectViewUtil=new SelectViewUtil(fromBT,toBT);
+        int shareIndex=selectViewUtil.getShareIndex();
+        if(shareIndex==-1){
+            shareIndex=0;
+        }
+        selectViewUtil.setSelectViewByIndex(shareIndex);
         //设置历史布局
         historyRV = findViewById(R.id.rv_history);
         initLM= new LinearLayoutManager(this);
@@ -303,9 +331,13 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     public void initData() {
         keyEventUtil.setListen(keyEventListen);
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.BACK.ordinal(), ActivityKeyDownListUtil.back());
-//        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.DOWN.ordinal(), ActivityKeyDownListUtil.toDownList());
-//        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.LEFT.ordinal(), ActivityKeyDownListUtil.toLeftList());
-//        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.RIGHT.ordinal(), ActivityKeyDownListUtil.toRightList());
+        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk1());
+        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk2());
+
+        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.TOP.ordinal(), ActivityKeyDownListUtil.toTopList());
+        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.DOWN.ordinal(), ActivityKeyDownListUtil.toDownList());
+        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.LEFT.ordinal(), ActivityKeyDownListUtil.toLeftList());
+        keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.RIGHT.ordinal(), ActivityKeyDownListUtil.toRightList());
     }
 
     @Override
@@ -354,13 +386,26 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
         return context.getApplicationContext().getResources().getString(rsStr);
     }
 
-    public int getNowShowIndex() {
-        int index = -1;
-        int childCount =historyRV.getChildCount();
-        if (childCount > 0) {
-            View lastChild = historyRV.getChildAt(childCount - 1);
-            index = historyRV.getChildAdapterPosition(lastChild);
-        }
-        return index;
-    }
+
+    private int historyIndex=0;
+
+//    public int getTopShowIndex() {
+//        int index = -1;
+//        int childCount =historyRV.getChildCount();
+//        if (childCount > 0) {
+//            View lastChild = historyRV.getChildAt(childCount - 1);
+//            index = historyRV.getChildAdapterPosition(lastChild);
+//        }
+//        return index;
+//    }
+//
+//    public int getDownShowIndex() {
+//        int index = -1;
+//        int childCount =historyRV.getChildCount();
+//        if (childCount > 0) {
+//            View fristChild = historyRV.getChildAt(0);
+//            index = historyRV.getChildAdapterPosition(fristChild);
+//        }
+//        return index;
+//    }
 }

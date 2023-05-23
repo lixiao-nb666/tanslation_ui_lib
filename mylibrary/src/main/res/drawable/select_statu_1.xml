@@ -1,4 +1,3 @@
-
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
 
@@ -8,8 +7,6 @@
 
     <item android:drawable="@drawable/select_false_1" android:state_selected="false" ></item>
     <item android:drawable="@drawable/select_false_1" android:state_focused="false"></item>
-
-
 
 
 </selector>

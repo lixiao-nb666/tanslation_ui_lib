@@ -31,7 +31,6 @@ public class NewBeeTextHistoryAdapter extends RecyclerView.Adapter {
 
     public void setText(NewBeeRecogTextBean textBean){
         map.put(textBean.getIndex()+"",textBean);
-        notifyDataSetChanged();
     }
 
 

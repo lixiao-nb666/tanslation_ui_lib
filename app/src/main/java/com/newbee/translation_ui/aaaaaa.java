@@ -17,17 +17,17 @@ public class aaaaaa extends BaseTranslationSimpleOneDialogActivity {
 
     @Override
     public Class getToLangActivity() {
-        return null;
+        return FromLangActivity.class;
     }
 
     @Override
     public String getFromLangStr() {
-        return null;
+        return "from 11";
     }
 
     @Override
     public String getToLangStr() {
-        return null;
+        return "to 22";
     }
 
     @Override
@@ -36,7 +36,7 @@ public class aaaaaa extends BaseTranslationSimpleOneDialogActivity {
         VoiceToTextEventSubscriptionSubject.getInstence().getRecogingStr("123");
         VoiceToTextEventSubscriptionSubject.getInstence().getTranslationStr("fjklsdjflsalfjklsad");
 
-        basehandler.postDelayed(runnable,2000);
+        basehandler.postDelayed(runnable,1000);
     }
 
     private int index;
@@ -45,7 +45,7 @@ public class aaaaaa extends BaseTranslationSimpleOneDialogActivity {
         public void run() {
             index++;
             VoiceToTextEventSubscriptionSubject.getInstence().getRecogFinshAndTranslationStr("1244","xiao ge da shuai bi  !"+index);
-            basehandler.postDelayed(runnable,2000);
+            basehandler.postDelayed(runnable,1000);
         }
     };
 }
