@@ -17,9 +17,6 @@ public class FromLangActivity extends BaseSelectLangActivity {
         for(int i = 0; i< size; i++){
             list.add("lixiao:"+i);
         }
-
-//        list.add("numb is ok:"+(YdLangType.values().length==numb));
-//        Log.i("kankanduibudui","numb is ok:"+(YdLangType.values().length==list.size()));
         return list;
     }
 
@@ -44,8 +41,4 @@ public class FromLangActivity extends BaseSelectLangActivity {
         return new NewBeeSelectToAdapter(context,"");
     }
 
-    @Override
-    public Class backToActivity() {
-        return aaaaaa.class;
-    }
 }

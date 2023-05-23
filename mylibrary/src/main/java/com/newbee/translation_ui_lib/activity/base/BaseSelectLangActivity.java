@@ -35,7 +35,7 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
 
     public abstract BaseNewBeeSelectToAdapter getAdapter();
 
-
+    public abstract Class returnToClass();
 
 
     private BaseNewBeeSelectToAdapter.ItemClick itemClick = new BaseNewBeeSelectToAdapter.ItemClick() {
@@ -166,7 +166,8 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
                     }
                     break;
                 case BACK:
-                    finish();
+                    ActivityManager.getInstance().finishAllActivity();
+                    toActivity(returnToClass());
                     break;
 
             }
