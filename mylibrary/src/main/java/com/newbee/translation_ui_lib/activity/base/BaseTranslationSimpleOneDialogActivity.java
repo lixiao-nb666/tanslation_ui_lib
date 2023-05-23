@@ -336,6 +336,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
         VoiceToTextEventSubscriptionSubject.getInstence().detach(voiceToTextEventObserver);
         getVoiceToTextProcess().pause();
         keyEventUtil.pause();
+        finish();
     }
 
 
