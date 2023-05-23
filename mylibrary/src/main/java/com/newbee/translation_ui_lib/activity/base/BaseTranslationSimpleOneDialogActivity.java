@@ -183,7 +183,6 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
         @Override
         public void nowCanDoEvent(int eventTypeInt) {
             KeyCodesEventType eventType = KeyCodesEventType.values()[eventTypeInt];
-
             switch (eventType) {
                 case NONE:
                     break;

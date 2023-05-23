@@ -169,7 +169,6 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
                     ActivityManager.getInstance().finishAllActivity();
                     toActivity(returnToClass());
                     break;
-
             }
         }
     };
