@@ -12,6 +12,7 @@
         android:layout_marginTop="57px"
         android:layout_marginLeft="57px"
         android:gravity="center"
+        android:alpha="0.85"
         android:orientation="horizontal">
 
         <Button
@@ -20,7 +21,7 @@
             android:layout_height="36px"
             android:background="@drawable/select_statu_1"
             android:textSize="14px"
-            android:textColor="@color/white"
+
             android:text="from language"/>
 
 
@@ -30,7 +31,7 @@
             android:layout_height="36px"
             android:background="@drawable/select_statu_2"
             android:textSize="14px"
-            android:textColor="@color/white"
+
             android:text="to language"/>
 
 
@@ -96,6 +97,7 @@
             android:layout_gravity="bottom"
             android:textColor="@color/text_ts_statu_color"
             android:text=""
+            android:alpha="0.9"
             />
 
     </FrameLayout>

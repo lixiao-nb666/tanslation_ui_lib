@@ -195,9 +195,11 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                     break;
                 case LEFT:
                     selectViewUtil.toLast();
+                    setTextColor();
                     break;
                 case RIGHT:
                     selectViewUtil.toNext();
+                    setTextColor();
                     break;
                 case TOP:
                     if(null==adapter||adapter.getItemCount()==0){
@@ -294,6 +296,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
             @Override
             public void onClick(View v) {
                 selectViewUtil.setSelectViewByIndex(QueType.TO_FROM_PAGER.ordinal());
+                setTextColor();
                 queToDo(QueType.TO_FROM_PAGER.ordinal());
             }
         });
@@ -302,6 +305,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
             @Override
             public void onClick(View v) {
                 selectViewUtil.setSelectViewByIndex(QueType.TO_TO_PAGER.ordinal());
+                setTextColor();
                 queToDo(QueType.TO_TO_PAGER.ordinal());
             }
         });
@@ -314,6 +318,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
             shareIndex=0;
         }
         selectViewUtil.setSelectViewByIndex(shareIndex);
+        setTextColor();
         //设置历史布局
         historyRV = findViewById(R.id.rv_history);
         initLM= new LinearLayoutManager(this);
@@ -384,6 +389,15 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
 
     private String useRsgetString(int rsStr){
         return context.getApplicationContext().getResources().getString(rsStr);
+    }
+
+    private void setTextColor(){
+        toBT.setTextColor(getTextColor(toBT.isSelected()));
+        fromBT.setTextColor(getTextColor(fromBT.isSelected()));
+    }
+
+    private int getTextColor(boolean isSelect){
+        return getResources().getColor(isSelect? com.newbee.bulid_lib.R.color.black:R.color.text_translation_over_color);
     }
 
 
