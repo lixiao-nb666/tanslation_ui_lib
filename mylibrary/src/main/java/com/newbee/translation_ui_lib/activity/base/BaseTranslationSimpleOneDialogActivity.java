@@ -13,6 +13,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.newbee.alarm_lib.bean.TaoziTimeBean;
+import com.newbee.alarm_lib.event.time.TaoziTimeBeanListenObserver;
+import com.newbee.alarm_lib.event.time.TaoziTimeBeanListenSubscriptionSubject;
+import com.newbee.alarm_lib.manager.TaoziTimeClockManager;
+import com.newbee.alarm_lib.service.TaoziTimeClockServiceDao;
 import com.newbee.bulid_lib.mybase.activity.BaseCompatActivity;
 import com.newbee.bulid_lib.mybase.activity.util.ActivityManager;
 import com.newbee.bulid_lib.util.SelectViewUtil;
@@ -37,6 +43,29 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     public abstract String getFromLangStr();
     public abstract String getToLangStr();
 
+    private TaoziTimeClockServiceDao serviceDao;
+
+    private String timeTsStr="  s :  ";
+    private TaoziTimeBeanListenObserver timeBeanListenObserver=new TaoziTimeBeanListenObserver() {
+        @Override
+        public void listenTime(TaoziTimeBean taoziTimeBean) {
+            if(needFinshTime==0){
+                return;
+            }
+
+            int timeCha= (int) ((needFinshTime-taoziTimeBean.getTime())/1000);
+            if(timeCha<=0){
+                finish();
+            }else {
+                String str=timeCha+"";
+                Message msg = new Message();
+                msg.what = UpdateUiType.updateTimeFinshStr.ordinal();
+                msg.obj = str;
+                uiHandler.sendMessage(msg);
+            }
+        }
+    };
+
 
     private TextView transTV,tsStatuTV;
     private boolean isTs;
@@ -60,7 +89,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
         public void isConnect() {
             String str=useRsgetString(R.string.statu_net_ok);
             Message msg = new Message();
-            msg.what = UpdateUiType.updateOkStr.ordinal();
+            msg.what = UpdateUiType.updateStatuOkStr.ordinal();
             msg.obj = str;
             uiHandler.sendMessage(msg);
         }
@@ -78,7 +107,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
         public void startOk() {
             String str=useRsgetString(R.string.statu_start_ok);
             Message msg = new Message();
-            msg.what = UpdateUiType.updateOkStr.ordinal();
+            msg.what = UpdateUiType.updateStatuOkStr.ordinal();
             msg.obj = str;
             uiHandler.sendMessage(msg);
         }
@@ -145,9 +174,22 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                 case updateStatuStr:
                     isTs=true;
                     str = (String) msg.obj;
-                    SetTextUtil.setText(tsStatuTV,str );
+                    SetTextUtil.setText(tsStatuTV,str);
                     break;
-                case updateOkStr:
+                case updateTimeFinshStr:
+                    str = (String) msg.obj;
+                    String lastStr=tsStatuTV.getText().toString();
+                    int index=lastStr.lastIndexOf(timeTsStr);
+                    if(index!=-1){
+                        str=lastStr.substring(0,index)+timeTsStr+str;
+                    }else {
+                        str=lastStr+timeTsStr+str;
+                    }
+                    SetTextUtil.setText(tsStatuTV,str);
+                    break;
+
+
+                case updateStatuOkStr:
                     str = (String) msg.obj;
                     SetTextUtil.setText(transTV,str,useRsgetColor(R.color.text_translation_over_color) );
                     if(isTs){
@@ -163,7 +205,10 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                         SetTextUtil.setText(tsStatuTV,"" );
                     }
                     break;
+
+
                 case updateTextTransStr:
+                    cancelTimeToFinsh();
                     textBean = NewBeeRecogTextManager.getInstance().getNowTextBean();
                     if(null==textBean){
                         return;
@@ -171,14 +216,11 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                     SetTextUtil.setText(transTV,textBean,false ,useRsgetColor(com.newbee.bulid_lib.R.color.white),useRsgetColor(R.color.text_translation_over_color));
                     adapter.setText(textBean);
                     adapter.notifyDataSetChanged();
-
-
                     if(isTs){
                         isTs=false;
                         SetTextUtil.setText(tsStatuTV,"" );
                     }
                     break;
-
             }
 
         }
@@ -189,6 +231,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     private SystemKeyEventListen keyEventListen=new SystemKeyEventListen() {
         @Override
         public void nowCanDoEvent(int eventTypeInt) {
+            cancelTimeToFinsh();
             KeyCodesEventType eventType = KeyCodesEventType.values()[eventTypeInt];
             switch (eventType) {
                 case NONE:
@@ -221,7 +264,6 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                     if(null==adapter||adapter.getItemCount()==0){
                         return;
                     }
-
                     nowIsSeeHistory=true;
                     historyIndex=historyIndex-3;
                     if(historyIndex<0){
@@ -338,11 +380,15 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.BACK.ordinal(), ActivityKeyDownListUtil.back());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk1());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.QUE.ordinal(), ActivityKeyDownListUtil.queOk2());
-
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.TOP.ordinal(), ActivityKeyDownListUtil.toTopList());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.DOWN.ordinal(), ActivityKeyDownListUtil.toDownList());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.LEFT.ordinal(), ActivityKeyDownListUtil.toLeftList());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.RIGHT.ordinal(), ActivityKeyDownListUtil.toRightList());
+
+       //初始化时间监听控件
+        TaoziTimeClockManager.getInstance();
+        serviceDao=new TaoziTimeClockServiceDao(this,null);
+        serviceDao.startServiceIsBind();
     }
 
     @Override
@@ -373,6 +419,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
         VoiceToTextEventSubscriptionSubject.getInstence().detach(voiceToTextEventObserver);
         getVoiceToTextProcess().pause();
         keyEventUtil.pause();
+        cancelTimeToFinsh();
         finish();
     }
 
@@ -422,4 +469,21 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
 //        }
 //        return index;
 //    }
+
+
+    private long needFinshTime;
+    public void setAfterTimeToFinsh(long afterTimeToFinsh){
+        needFinshTime=System.currentTimeMillis()+afterTimeToFinsh;
+        TaoziTimeBeanListenSubscriptionSubject.getInstence().attach(timeBeanListenObserver);
+    }
+
+    public void cancelTimeToFinsh(){
+        if(needFinshTime!=0){
+            needFinshTime=0;
+            TaoziTimeBeanListenSubscriptionSubject.getInstence().detach(timeBeanListenObserver);
+        }
+
+    }
+
+
 }

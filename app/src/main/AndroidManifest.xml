@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".aaaaaa"
             android:launchMode="singleTask"
-        android:exported="true">
+            android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
@@ -23,6 +23,8 @@
             android:screenOrientation="landscape">
 
         </activity>
+
+        <service android:name="com.newbee.alarm_lib.service.TaoziTimeClockService"/>
 
     </application>
 

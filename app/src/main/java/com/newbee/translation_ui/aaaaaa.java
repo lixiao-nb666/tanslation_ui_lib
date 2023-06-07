@@ -43,9 +43,17 @@ public class aaaaaa extends BaseTranslationSimpleOneDialogActivity {
     private Runnable runnable=new Runnable() {
         @Override
         public void run() {
-            index++;
-            VoiceToTextEventSubscriptionSubject.getInstence().getRecogFinshAndTranslationStr("1244","xiao ge da shuai bi  !"+index);
-            basehandler.postDelayed(runnable,1000);
+            if(index>=10){
+                VoiceToTextEventSubscriptionSubject.getInstence().getStatu("kankandaojishi");
+                setAfterTimeToFinsh(10*1000);
+                index=0;
+                basehandler.postDelayed(runnable,9*1000);
+            }else {
+
+                index++;
+                VoiceToTextEventSubscriptionSubject.getInstence().getRecogFinshAndTranslationStr("1244","xiao ge da shuai bi  !"+index);
+                basehandler.postDelayed(runnable,1000);
+            }
         }
     };
 }

@@ -32,4 +32,5 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.github.lixiao-nb666:system_key_lib:1.0.5'
     implementation 'com.github.lixiao-nb666:sava_data_lib:1.0.0'
+    implementation 'com.github.lixiao-nb666:alarm_lib:1.0.1'
 }
