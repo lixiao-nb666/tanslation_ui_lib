@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.newbee.translation_ui_lib.R;
+import com.newbee.translation_ui_lib.bean.ShowInfoBean;
 
 
 import java.util.List;
@@ -65,14 +66,14 @@ public abstract class BaseNewBeeSelectToAdapter extends RecyclerView.Adapter {
         if(null==showInfoBean){
             return;
         }
-        viewHodler.titleTV.setText(showInfoBean.title);
-        if(TextUtils.isEmpty(showInfoBean.content)){
+        viewHodler.titleTV.setText(showInfoBean.getTitle());
+        if(TextUtils.isEmpty(showInfoBean.getContent())){
             viewHodler.contentTV.setText("");
         }else {
-            if(showInfoBean.hideContentTitle){
-                viewHodler.contentTV.setText(showInfoBean.content);
+            if(showInfoBean.isHideContentTitle()){
+                viewHodler.contentTV.setText(showInfoBean.getContent());
             }else {
-                viewHodler.contentTV.setText(viewHodler.contentTV.getContext().getApplicationContext().getResources().getText(R.string.item_content_head)+showInfoBean.content);
+                viewHodler.contentTV.setText(viewHodler.contentTV.getContext().getApplicationContext().getResources().getText(R.string.item_content_head)+showInfoBean.getContent());
             }
         }
         View.OnClickListener onClickListener=new View.OnClickListener() {
@@ -151,47 +152,6 @@ public abstract class BaseNewBeeSelectToAdapter extends RecyclerView.Adapter {
         public void nowNeedToPager(int index);
     }
 
-    public class ShowInfoBean{
-        String title;
-        String content;
-        boolean hideContentTitle;
-
-        public ShowInfoBean() {
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public boolean isHideContentTitle() {
-            return hideContentTitle;
-        }
-
-        public void setHideContentTitle(boolean hideContentTitle) {
-            this.hideContentTitle = hideContentTitle;
-        }
-
-        @Override
-        public String toString() {
-            return "ShowInfoBean{" +
-                    "title='" + title + '\'' +
-                    ", content='" + content + '\'' +
-                    ", hideContentTitle=" + hideContentTitle +
-                    '}';
-        }
-    }
 
     public abstract ShowInfoBean getShowInfo(Object obj);
 

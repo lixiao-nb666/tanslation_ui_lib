@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37px"
+        android:textSize="29px"
+        android:textColor="@color/text_translation_over_color"
+        android:text="@string/setting_language"/>
+
+    <TextView
+        android:id="@+id/tv_activity_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90px"
+        android:textSize="11px"
+        android:textColor="@color/text_translation_over_color" />
+
+
+    <ImageView
+        android:id="@+id/iv_to_left"
+        android:layout_width="80px"
+        android:layout_height="99px"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="22px"
+        android:src="@drawable/item_to_left"/>
+
+    <ImageView
+        android:id="@+id/iv_to_right"
+        android:layout_width="80px"
+        android:layout_height="99px"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="22px"
+        android:src="@drawable/item_to_right"/>
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_last_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16px"
+            android:textColor="@color/text_translation_over_color"/>
+
+        <TextView
+            android:id="@+id/tv_now_content"
+            android:layout_width="453px"
+            android:layout_height="96px"
+            android:textSize="22px"
+            android:text="111"
+            android:paddingRight="50px"
+            android:paddingLeft="50px"
+            android:gravity="center"
+            android:background="@drawable/add_delect_content_bg"
+            android:textColor="@color/text_translation_over_color"/>
+
+        <TextView
+            android:id="@+id/tv_next_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16px"
+            android:textColor="@color/text_translation_over_color"/>
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/tv_pager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="39px"
+        android:textSize="18px"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/text_translation_over_color"/>
+
+
+
+</RelativeLayout>

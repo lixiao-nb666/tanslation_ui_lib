@@ -2,6 +2,8 @@ package com.newbee.translation_ui_lib.util;
 
 import android.text.TextUtils;
 import android.widget.TextView;
+
+import com.newbee.translation_ui_lib.R;
 import com.newbee.translation_ui_lib.bean.NewBeeRecogTextBean;
 
 
@@ -53,4 +55,6 @@ public class SetTextUtil {
     public static void setText(TextView textView, String str){
         textView.setText(str);
     }
+
+
 }

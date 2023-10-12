@@ -9,18 +9,29 @@
         android:name=".App"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".aaaaaa"
             android:launchMode="singleTask"
             android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
     </activity>
 
         <activity android:name=".FromLangActivity"
             android:screenOrientation="landscape">
+
+        </activity>
+
+        <activity android:name=".AddLangActivity"
+            android:screenOrientation="landscape"
+            android:exported="true">
+
+
 
         </activity>
 

@@ -8,4 +8,6 @@
 
     <string name="item_content_head">支持的国家和地区:</string>
 
+    <string name="setting_language">设置语言</string>
+
 </resources>

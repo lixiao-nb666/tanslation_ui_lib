@@ -3,6 +3,7 @@ package com.newbee.translation_ui;
 import android.content.Context;
 
 import com.newbee.translation_ui_lib.adapter.BaseNewBeeSelectToAdapter;
+import com.newbee.translation_ui_lib.bean.ShowInfoBean;
 
 
 public class NewBeeSelectToAdapter extends BaseNewBeeSelectToAdapter {

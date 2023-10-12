@@ -5,6 +5,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,9 +30,11 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
 
     public abstract List<Object> getList();
 
+    public abstract String activityTitleStr();
+
     public abstract void nowSelectNeedTodo(int index,Object object);
 
-    public abstract String nowStr();
+    public abstract String nowShareStr();
 
     public abstract BaseNewBeeSelectToAdapter getAdapter();
 
@@ -50,6 +53,7 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
         }
     };
 
+    private TextView activityTitleTV;
     private RecyclerView initRV;
 
 
@@ -62,6 +66,8 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
 
     @Override
     public void initView() {
+        activityTitleTV=findViewById(R.id.tv_activity_title);
+
         initRV = findViewById(R.id.rv_init);
         LinearLayoutManager initLM = new LinearLayoutManager(this);
         initLM.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -73,6 +79,7 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
     public void initData() {
         initAdapter = getAdapter();
         initAdapter.setList(getList());
+        activityTitleTV.setText(activityTitleStr());
     }
 
     @Override
@@ -201,6 +208,6 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
 
 
     private String getShareStr(){
-        return this.getClass().getSimpleName()+nowStr();
+        return this.getClass().getSimpleName()+nowShareStr();
     }
 }

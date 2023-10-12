@@ -10,4 +10,6 @@
 
     <string name="item_content_head">サポートされている国と地域：</string>
 
+    <string name="setting_language">言語 設定</string>
+
 </resources>

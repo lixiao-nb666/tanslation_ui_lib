@@ -21,6 +21,11 @@ public class aaaaaa extends BaseTranslationSimpleOneDialogActivity {
     }
 
     @Override
+    public Class getSetActivity() {
+        return AddLangActivity.class;
+    }
+
+    @Override
     public String getFromLangStr() {
         return "from 11";
     }
@@ -49,7 +54,6 @@ public class aaaaaa extends BaseTranslationSimpleOneDialogActivity {
                 index=0;
                 basehandler.postDelayed(runnable,9*1000);
             }else {
-
                 index++;
                 VoiceToTextEventSubscriptionSubject.getInstence().getRecogFinshAndTranslationStr("1244","xiao ge da shuai bi  !"+index);
                 basehandler.postDelayed(runnable,1000);

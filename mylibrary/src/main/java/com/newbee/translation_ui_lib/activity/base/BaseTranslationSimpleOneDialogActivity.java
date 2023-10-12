@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +41,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     public abstract BaseVoiceToTextProcess getVoiceToTextProcess();
     public abstract Class getFromLangActivity();
     public abstract Class getToLangActivity();
+    public abstract Class getSetActivity();
     public abstract String getFromLangStr();
     public abstract String getToLangStr();
 
@@ -70,6 +72,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     private TextView transTV,tsStatuTV;
     private boolean isTs;
     private Button toBT,fromBT;
+    private ImageView setIV;
     private SelectViewUtil selectViewUtil;
 
 
@@ -199,7 +202,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                     break;
                 case updateErrStr:
                     str = (String) msg.obj;
-                    SetTextUtil.setText(transTV,str,useRsgetColor(com.newbee.bulid_lib.R.color.red));
+                    SetTextUtil.setText(transTV,str,useRsgetColor(R.color.red1));
                     if(isTs){
                         isTs=false;
                         SetTextUtil.setText(tsStatuTV,"" );
@@ -213,7 +216,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                     if(null==textBean){
                         return;
                     }
-                    SetTextUtil.setText(transTV,textBean,false ,useRsgetColor(com.newbee.bulid_lib.R.color.white),useRsgetColor(R.color.text_translation_over_color));
+                    SetTextUtil.setText(transTV,textBean,false ,useRsgetColor(R.color.white1),useRsgetColor(R.color.text_translation_over_color));
                     adapter.setText(textBean);
                     adapter.notifyDataSetChanged();
                     if(isTs){
@@ -296,6 +299,11 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                 Intent fromIntent=new Intent(BaseTranslationSimpleOneDialogActivity.this, getFromLangActivity());
                 startActivity(fromIntent);
                 break;
+            case TO_SET_PAGER:
+                Intent setIntent=new Intent(BaseTranslationSimpleOneDialogActivity.this, getSetActivity());
+                startActivity(setIntent);
+                break;
+
         }
 
     }
@@ -351,10 +359,19 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                 queToDo(QueType.TO_TO_PAGER.ordinal());
             }
         });
-
+        setIV=findViewById(R.id.iv_set);
+        setIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectViewUtil.setSelectViewByIndex(QueType.TO_SET_PAGER.ordinal());
+                setTextColor();
+                queToDo(QueType.TO_SET_PAGER.ordinal());
+            }
+        });
+        setIV.setFocusable(false);
         fromBT.setFocusable(false);
         toBT.setFocusable(false);
-        selectViewUtil=new SelectViewUtil(fromBT,toBT);
+        selectViewUtil=new SelectViewUtil(fromBT,toBT,setIV);
         int shareIndex=selectViewUtil.getShareIndex();
         if(shareIndex==-1){
             shareIndex=0;
@@ -441,10 +458,12 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     private void setTextColor(){
         toBT.setTextColor(getTextColor(toBT.isSelected()));
         fromBT.setTextColor(getTextColor(fromBT.isSelected()));
+
     }
 
     private int getTextColor(boolean isSelect){
-        return getResources().getColor(isSelect? com.newbee.bulid_lib.R.color.black:R.color.text_translation_over_color);
+
+        return getResources().getColor(isSelect? R.color.black1:R.color.text_translation_over_color);
     }
 
 
@@ -482,7 +501,6 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
             needFinshTime=0;
             TaoziTimeBeanListenSubscriptionSubject.getInstence().detach(timeBeanListenObserver);
         }
-
     }
 
 

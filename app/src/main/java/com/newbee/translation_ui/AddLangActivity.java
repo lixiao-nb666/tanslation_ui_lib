@@ -1,13 +1,15 @@
 package com.newbee.translation_ui;
 
 
-import com.newbee.bulid_lib.mybase.activity.util.ActivityManager;
+import com.newbee.translation_ui_lib.activity.base.BaseAddOrDelectLangActivity;
 import com.newbee.translation_ui_lib.activity.base.BaseSelectLangActivity;
 import com.newbee.translation_ui_lib.adapter.BaseNewBeeSelectToAdapter;
+import com.newbee.translation_ui_lib.bean.ShowInfoBean;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class FromLangActivity extends BaseSelectLangActivity {
+public class AddLangActivity extends BaseAddOrDelectLangActivity {
 
 
     @Override
@@ -20,10 +22,8 @@ public class FromLangActivity extends BaseSelectLangActivity {
         return list;
     }
 
-    @Override
-    public String activityTitleStr() {
-        return "shenmegui";
-    }
+
+
 
 
     @Override
@@ -34,6 +34,11 @@ public class FromLangActivity extends BaseSelectLangActivity {
     }
 
     @Override
+    public String activityTitleStr() {
+        return "diao mao in the house";
+    }
+
+    @Override
     public String nowShareStr() {
         return "from";
     }
@@ -41,13 +46,19 @@ public class FromLangActivity extends BaseSelectLangActivity {
 
 
     @Override
-    public BaseNewBeeSelectToAdapter getAdapter() {
-        return new NewBeeSelectToAdapter(context,"");
+    public Class returnToClass() {
+        return aaaaaa.class;
     }
 
     @Override
-    public Class returnToClass() {
-        return aaaaaa.class;
+    public ShowInfoBean getShowInfo(Object object) {
+        if(null==object){
+            return null;
+        }
+        ShowInfoBean showInfoBean=new ShowInfoBean();
+        showInfoBean.setTitle(object.toString());
+        showInfoBean.setContent(object.toString());
+        return showInfoBean;
     }
 
 }

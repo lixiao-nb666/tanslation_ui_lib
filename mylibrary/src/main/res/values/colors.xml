@@ -9,6 +9,7 @@
     <color name="text_translation_over_color">#FF5DFF00</color>
     <color name="text_ts_statu_color">#F0FFB1</color>
 
-
-
+    <color name="black1">#000000</color> <!--黑色 -->
+    <color name="red1">#FF0000</color> <!--红色 -->
+    <color name="white1">#FFFFFF</color> <!--白色 -->
 </resources>
