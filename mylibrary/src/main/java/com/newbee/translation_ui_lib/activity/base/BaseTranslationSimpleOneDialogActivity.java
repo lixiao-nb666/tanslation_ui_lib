@@ -208,8 +208,6 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                         SetTextUtil.setText(tsStatuTV,"" );
                     }
                     break;
-
-
                 case updateTextTransStr:
                     cancelTimeToFinsh();
                     textBean = NewBeeRecogTextManager.getInstance().getNowTextBean();
@@ -372,11 +370,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
         fromBT.setFocusable(false);
         toBT.setFocusable(false);
         selectViewUtil=new SelectViewUtil(fromBT,toBT,setIV);
-        int shareIndex=selectViewUtil.getShareIndex();
-        if(shareIndex==-1){
-            shareIndex=0;
-        }
-        selectViewUtil.setSelectViewByIndex(shareIndex);
+        selectViewUtil.recoveryView(0);
         setTextColor();
         //设置历史布局
         historyRV = findViewById(R.id.rv_history);
@@ -458,7 +452,6 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     private void setTextColor(){
         toBT.setTextColor(getTextColor(toBT.isSelected()));
         fromBT.setTextColor(getTextColor(fromBT.isSelected()));
-
     }
 
     private int getTextColor(boolean isSelect){

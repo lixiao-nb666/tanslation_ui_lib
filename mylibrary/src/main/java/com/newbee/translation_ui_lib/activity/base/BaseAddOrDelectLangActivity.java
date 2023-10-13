@@ -21,9 +21,6 @@ import java.util.List;
 
 public abstract class BaseAddOrDelectLangActivity extends BaseCompatActivity {
 
-
-
-
     public abstract List<Object> getList();
 
     public abstract void nowSelectNeedTodo(int index,Object object);
@@ -61,13 +58,15 @@ public abstract class BaseAddOrDelectLangActivity extends BaseCompatActivity {
                     nowSelect();
                     break;
                 case BACK:
-                    ActivityManager.getInstance().finishAllActivity();
-                    toActivity(returnToClass());
+                    back();
                     break;
             }
         }
     };
-
+    private void back(){
+        ActivityManager.getInstance().finishAllActivity();
+        toActivity(returnToClass());
+    }
 
     @Override
     public int getViewLayoutRsId() {
@@ -81,7 +80,6 @@ public abstract class BaseAddOrDelectLangActivity extends BaseCompatActivity {
         nowContentTV=findViewById(R.id.tv_now_content);
         nextContentTV=findViewById(R.id.tv_next_content);
         pagerTV=findViewById(R.id.tv_pager);
-
     }
 
     private void setToLast(){
@@ -115,6 +113,10 @@ public abstract class BaseAddOrDelectLangActivity extends BaseCompatActivity {
     @Override
     public void initData() {
         list=getList();
+        if(null==list||list.size()==0){
+            back();
+            return;
+        }
         try {
             String shareIndexStr=MyShare.getInstance().getString(getShareStr());
             if(!TextUtils.isEmpty(shareIndexStr)){
