@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="horizontal">
+
+
+    <ImageView
+        android:id="@+id/iv_to_left"
+        android:layout_width="218px"
+        android:layout_height="266px"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="90px"
+        android:src="@drawable/item_to_left"/>
+
+    <ImageView
+        android:id="@+id/iv_to_right"
+        android:layout_width="218px"
+        android:layout_height="266px"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="90px"
+        android:src="@drawable/item_to_right"/>
+    
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="922px"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/item_content_bj">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="82px"
+            android:textSize="56px"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/text_translation_over_color"/>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48px"
+            android:layout_marginLeft="68px"
+            android:layout_marginRight="68px"
+            android:layout_marginBottom="78px"
+            android:textSize="36px"
+            android:textColor="@color/text_translation_over_color"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_pager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="78px"
+        android:textSize="36px"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/text_translation_over_color"/>
+
+
+
+</RelativeLayout>

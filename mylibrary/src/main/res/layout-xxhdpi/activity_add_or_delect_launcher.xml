@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="74px"
+        android:textSize="58px"
+        android:textColor="@color/text_translation_over_color"
+        android:text="@string/setting_language"/>
+
+    <TextView
+        android:id="@+id/tv_activity_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="180px"
+        android:textSize="22px"
+        android:textColor="@color/text_translation_over_color" />
+
+
+    <ImageView
+        android:id="@+id/iv_to_left"
+        android:layout_width="160px"
+        android:layout_height="198px"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="44px"
+        android:src="@drawable/item_to_left"/>
+
+    <ImageView
+        android:id="@+id/iv_to_right"
+        android:layout_width="160px"
+        android:layout_height="198px"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="44px"
+        android:src="@drawable/item_to_right"/>
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_last_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32px"
+            android:textColor="@color/text_translation_over_color"/>
+
+        <TextView
+            android:id="@+id/tv_now_content"
+            android:layout_width="906px"
+            android:layout_height="192px"
+            android:textSize="44px"
+            android:paddingRight="100px"
+            android:paddingLeft="100px"
+            android:gravity="center"
+            android:background="@drawable/add_delect_content_bg"
+            android:textColor="@color/text_translation_over_color"/>
+
+        <TextView
+            android:id="@+id/tv_next_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32px"
+            android:textColor="@color/text_translation_over_color"/>
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/tv_pager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="78px"
+        android:textSize="36px"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/text_translation_over_color"/>
+
+
+
+</RelativeLayout>

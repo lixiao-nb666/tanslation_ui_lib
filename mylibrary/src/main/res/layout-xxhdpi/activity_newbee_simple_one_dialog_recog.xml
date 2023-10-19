@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="114px"
+        android:gravity="center_vertical"
+        android:alpha="0.85"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_from"
+            android:layout_width="264px"
+            android:layout_height="72px"
+            android:background="@drawable/select_statu_1"
+            android:textSize="28px"
+            android:layout_marginLeft="114px"
+            android:text="from language"/>
+
+
+        <Button
+            android:id="@+id/bt_to"
+            android:layout_width="264px"
+            android:layout_height="72px"
+            android:background="@drawable/select_statu_2"
+            android:textSize="28px"
+            android:text="to language"/>
+
+        <ImageView
+            android:id="@+id/iv_set"
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:src="@drawable/set_select"
+            android:layout_marginLeft="920px"
+
+            />
+
+
+    </LinearLayout>
+
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+
+
+
+        <LinearLayout
+            android:layout_marginTop="80px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:weightSum="1.0"
+            android:orientation="vertical"
+            android:layout_marginBottom="82px"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history"
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:layout_marginLeft="236px"
+                android:layout_marginRight="236px"
+                />
+
+            <TextView
+                android:id="@+id/tv_tran"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22px"
+                android:textSize="44px"
+                android:gravity="center"
+                android:layout_marginLeft="72px"
+                android:layout_marginRight="72px"
+                android:textColor="@color/text_translation_over_color" />
+
+
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="610px"
+            android:background="@drawable/text_hide_bj" />
+
+        <TextView
+            android:id="@+id/tv_ts_statu"
+            android:layout_width="match_parent"
+            android:layout_height="82px"
+            android:textSize="40px"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:textColor="@color/text_ts_statu_color"
+            android:text=""
+            android:alpha="0.9"
+            />
+
+    </FrameLayout>
+
+
+
+
+
+
+
+
+
+</LinearLayout>

@@ -157,12 +157,18 @@ public abstract class BaseSelectLangActivity extends BaseCompatActivity {
                     int toLeftIndex=getNowShowIndex()-1;
                     if(toLeftIndex>=0&&initAdapter.getItemCount()!=0){
                         initRV.scrollToPosition(toLeftIndex);
+                    }else {
+                        toLeftIndex=initAdapter.getItemCount()-1;
+                        initRV.scrollToPosition(toLeftIndex);
                     }
                     break;
                 case RIGHT:
                 case DOWN:
                     int toRightIndex=getNowShowIndex()+1;
                     if(initAdapter.getItemCount()!=0&&toRightIndex<initAdapter.getItemCount()){
+                        initRV.scrollToPosition(toRightIndex);
+                    }else {
+                        toRightIndex=0;
                         initRV.scrollToPosition(toRightIndex);
                     }
                     break;

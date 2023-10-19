@@ -125,6 +125,9 @@ public abstract class BaseAddOrDelectLangActivity extends BaseCompatActivity {
         }catch (Exception e){
 
         }
+        if(index>=list.size()){
+            index=0;
+        }
         showContent();
     }
 
