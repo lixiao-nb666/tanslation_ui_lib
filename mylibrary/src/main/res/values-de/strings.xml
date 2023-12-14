@@ -1,0 +1,13 @@
+<resources>
+
+    //语言配置列表
+
+    <string name="statu_net_ok">Eine erfolgreiche internet verbindung. ！</string>
+
+    <string name="statu_start_ok">Start läuft. Können jetzt reden !</string>
+
+    <string name="item_content_head">Unterstützt Von ländern und regionen:</string>
+
+    <string name="setting_language">Sprache einschalten</string>
+
+</resources>

@@ -301,7 +301,6 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
                 Intent setIntent=new Intent(BaseTranslationSimpleOneDialogActivity.this, getSetActivity());
                 startActivity(setIntent);
                 break;
-
         }
 
     }

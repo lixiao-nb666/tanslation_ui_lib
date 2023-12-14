@@ -1,0 +1,13 @@
+<resources>
+
+    //语言配置列表
+
+    <string name="statu_net_ok">Collegare le reti per il successo ！</string>
+
+    <string name="statu_start_ok">启动成功，现在可以说话 !</string>
+
+    <string name="item_content_head">Il lancio è stato un successo e ora possiamo parlare:</string>
+
+    <string name="setting_language">Stabilire le lingue</string>
+
+</resources>

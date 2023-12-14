@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">nrmyw translation</string>
+
     //语言配置列表
 
     <string name="statu_net_ok">网络连接成功 ！</string>

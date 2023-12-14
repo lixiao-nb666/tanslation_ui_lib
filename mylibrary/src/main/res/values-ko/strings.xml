@@ -1,0 +1,13 @@
+<resources>
+
+    //语言配置列表
+
+    <string name="statu_net_ok">언어 설정 ！</string>
+
+    <string name="statu_start_ok">시작 성공입니다. 지금 대화할 수 있습니다 !</string>
+
+    <string name="item_content_head">지원하는 국가와 지역:</string>
+
+    <string name="setting_language">언어 설정</string>
+
+</resources>
