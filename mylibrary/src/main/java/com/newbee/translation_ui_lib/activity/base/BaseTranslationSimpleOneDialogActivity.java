@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
+
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -45,7 +45,7 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
     public abstract String getFromLangStr();
     public abstract String getToLangStr();
 
-    private TaoziTimeClockServiceDao serviceDao;
+
 
     private String timeTsStr="  s :  ";
     private TaoziTimeBeanListenObserver timeBeanListenObserver=new TaoziTimeBeanListenObserver() {
@@ -395,10 +395,8 @@ public abstract class BaseTranslationSimpleOneDialogActivity extends BaseCompatA
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.LEFT.ordinal(), ActivityKeyDownListUtil.toLeftList());
         keyEventUtil.setKeyCodesToDoEvent(KeyCodesEventType.RIGHT.ordinal(), ActivityKeyDownListUtil.toRightList());
 
-       //初始化时间监听控件
-        TaoziTimeClockManager.getInstance();
-        serviceDao=new TaoziTimeClockServiceDao(this,null);
-        serviceDao.startServiceIsBind();
+
+
     }
 
     @Override
